@@ -1,31 +1,44 @@
-This repository includes a simple Python Flask web site, made for demonstration purposes only.
-The project can be developed locally with Docker and can be deployed to Azure Container Apps
-using the infrastructure files in `infra`. See below for more details.
+This repository includes a simple Python Flask API with a single route that returns JSON.
+You can use this project as a starting point for your own APIs.
 
-### Local development
+The repository is designed for use with [Docker containers](https://www.docker.com/), both for local development and deployment, and includes infrastructure files for deployment to [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview). 🐳
 
-This project has Dev Container support, so you can open it in Github Codespaces or local VS Code with the Dev Containers extension. 
+The code is organized using [Flask Blueprints](https://flask.palletsprojects.com/en/2.2.x/blueprints/),
+tested with [pytest](https://docs.pytest.org/en/7.2.x/),
+linted with [ruff](https://github.com/charliermarsh/ruff), and formatted with [black](https://black.readthedocs.io/en/stable/).
+Code quality issues are all checked with both [pre-commit](https://pre-commit.com/) and Github actions.
 
-Steps for running the server: 
+## Opening the project
 
-1. (Optional) If you're unable to open the devcontainer, [create a Python virtual environment](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments) and activate that.
+This project has [Dev Container support](https://code.visualstudio.com/docs/devcontainers/containers), so it will be be setup automatically if you open it in Github Codespaces or in local VS Code with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+
+If you're not using one of those options for opening the project, then you'll need to:
+
+1. Create a [Python virtual environment](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments) and activate it.
 
 2. Install the requirements:
 
-```shell
-python3 -m pip install -r requirements.txt
-```
+    ```shell
+    python3 -m pip install -r requirements-dev.txt
+    ```
 
-3. Run the local server: (or use VS Code "Run" button and select "Run server")
+3. Install the pre-commit hooks:
 
-```shell
-python3 -m flask --debug run
-```
+    ```shell
+    pre-commit install
+    ```
 
-3. Click 'http://127.0.0.1:5000' in the terminal, which should open the website in a new tab.
+## Local development
 
-4. Try the index page, try '/hello?name=yourname', and try a non-existent path (to see 404 error).
+Run the local server: (or use VS Code "Run" button and select "Run server")
 
+    ```shell
+    python3 -m flask --debug run
+    ```
+
+3. Click 'http://127.0.0.1:5000' in the terminal, which should open a new tab in the browser.
+
+4. Try the API at '/generate_name' and try passing in a parameter at the end of the URL, like '/generate_name?start_with=N'.
 
 ### Local development with Docker
 
@@ -46,7 +59,7 @@ docker run --publish 5000:5000 flask-app
 
 ### Deployment
 
-This repo is set up for deployment on Azure Container Apps (w/PostGreSQL server) using the configuration files in the `infra` folder.
+This repo is set up for deployment on Azure Container Apps using the configuration files in the `infra` folder.
 
 Steps for deployment:
 
@@ -71,7 +84,7 @@ azd deploy
 ### Costs
 
 Pricing varies per region and usage, so it isn't possible to predict exact costs for your usage.
-The majority of the Azure resources used in this infrastructure are on usage-based pricing tiers. 
+The majority of the Azure resources used in this infrastructure are on usage-based pricing tiers.
 However, Azure Container Registry has a fixed cost per registry per day.
 
 You can try the [Azure pricing calculator](https://azure.com/e/a0b45ff4228d46baa8ca1dbd15d62afa) for the resources:
@@ -81,7 +94,7 @@ You can try the [Azure pricing calculator](https://azure.com/e/a0b45ff4228d46baa
 - Key Vault: Standard tier. Costs are per transaction, a few transactions are used on each deploy. [Pricing](https://azure.microsoft.com/pricing/details/key-vault/)
 - Log analytics: Pay-as-you-go tier. Costs based on data ingested. [Pricing](https://azure.microsoft.com/pricing/details/monitor/)
 
-⚠️ To avoid unnecessary costs, remember to take down your app if it's no longer in use, 
+⚠️ To avoid unnecessary costs, remember to take down your app if it's no longer in use,
 either by deleting the resource group in the Portal or running `azd down`.
 
 
