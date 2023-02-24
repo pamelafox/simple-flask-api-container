@@ -3,8 +3,8 @@
 name: simple-flask-container-app
 
 services:
-  web:
+  api:
     project: .
-    module: web
+    module: api
     language: py
     host: containerapp
