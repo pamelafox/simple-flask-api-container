@@ -59,7 +59,11 @@ docker run --publish 5000:5000 flask-app
 
 ### Deployment
 
-This repo is set up for deployment on Azure Container Apps using the configuration files in the `infra` folder.
+This repo is set up for deployment on Azure Container Apps using the configuration files in the `infra` folder. 
+
+This diagram shows the architecture of the deployment:
+
+![Diagram of app architecture: Azure Container Apps environment, Azure Container App, Azure Container Registry, Container, and Key Vault](readme_diagram.png)
 
 Steps for deployment:
 
