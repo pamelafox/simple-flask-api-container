@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ status_code }}</h1>
+
+<p>{{ error_message }}</p>
+
+<img src="https://httpcats.com/{{ status_code }}.jpg" alt="Photo of a cat in an error-like state" width="500">
+{% endblock %}
