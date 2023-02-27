@@ -30,7 +30,7 @@ If you're not using one of those options for opening the project, then you'll ne
 
 ## Local development
 
-1. Run the local server: (or use VS Code "Run" button and select "Run server")
+1. Run the local server:
 
     ```shell
     python3 -m flask --debug run
