@@ -2,3 +2,5 @@
 .azure
 
 __pycache__/
+
+.coverage
