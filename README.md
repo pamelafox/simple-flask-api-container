@@ -30,7 +30,7 @@ If you're not using one of those options for opening the project, then you'll ne
 
 ## Local development
 
-Run the local server: (or use VS Code "Run" button and select "Run server")
+1. Run the local server:
 
     ```shell
     python3 -m flask --debug --app src/app:app run --port 5000
@@ -47,15 +47,15 @@ You need to either have Docker Desktop installed or have this open in Github Cod
 
 1. Build the image:
 
-```
-docker build --tag flask-app src/
-```
+    ```
+    docker build --tag flask-app src/
+    ```
 
 2. Run the image:
 
-```
-docker run --publish 5000:5000 flask-app
-```
+    ```
+    docker run --publish 5000:5000 flask-app
+    ```
 
 ### Deployment
 
@@ -71,19 +71,19 @@ Steps for deployment:
 2. Install the [Azure Dev CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd). (If you opened this repository in a devcontainer, that part will be done for you.)
 3. Provision and deploy all the resources:
 
-```shell
-azd up
-```
+    ```shell
+    azd up
+    ```
 
-It will prompt you to login and to provide a name (like "flask-app") and location (like "eastus"). Then it will provision the resources in your account and deploy the latest code. If you get an error with deployment, changing the location (like to "centralus") can help, as there are availability constraints for some of the resources.
+    It will prompt you to login and to provide a name (like "flask-app") and location (like "eastus"). Then it will provision the resources in your account and deploy the latest code. If you get an error with deployment, changing the location (like to "centralus") can help, as there are availability constraints for some of the resources.
 
 4. When `azd` has finished deploying, you'll see an endpoint URI in the command output. Visit that URI, and you should see the API output! 🎉
 
 5. When you've made any changes to the app code, you can just run:
 
-```shell
-azd deploy
-```
+    ```shell
+    azd deploy
+    ```
 
 ### Costs
 
