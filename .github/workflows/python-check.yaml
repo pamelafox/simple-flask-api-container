@@ -25,10 +25,10 @@ jobs:
         - name: Install dependencies
           run: |
             python -m pip install --upgrade pip
-            pip install -r requirements-dev.txt
+            pip install -r src/requirements-dev.txt
         - name: Lint with ruff
-          run: ruff .
+          run: ruff . --config src/pyproject.toml
         - name: Check formatting with black
-          run: black . --check --verbose
+          run: black . --check --verbose --config src/pyproject.toml
         - name: Run Pytest tests
-          run: pytest
+          run: python3 -m pytest

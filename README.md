@@ -19,7 +19,7 @@ If you're not using one of those options for opening the project, then you'll ne
 2. Install the requirements:
 
     ```shell
-    python3 -m pip install -r requirements-dev.txt
+    python3 -m pip install -r src/requirements-dev.txt
     ```
 
 3. Install the pre-commit hooks:
@@ -33,7 +33,7 @@ If you're not using one of those options for opening the project, then you'll ne
 Run the local server: (or use VS Code "Run" button and select "Run server")
 
     ```shell
-    python3 -m flask --debug run
+    python3 -m flask --debug --app src/app:app run --port 5000
     ```
 
 3. Click 'http://127.0.0.1:5000' in the terminal, which should open a new tab in the browser.
@@ -48,7 +48,7 @@ You need to either have Docker Desktop installed or have this open in Github Cod
 1. Build the image:
 
 ```
-docker build --tag flask-app .
+docker build --tag flask-app src/
 ```
 
 2. Run the image:
@@ -59,7 +59,7 @@ docker run --publish 5000:5000 flask-app
 
 ### Deployment
 
-This repo is set up for deployment on Azure Container Apps using the configuration files in the `infra` folder. 
+This repo is set up for deployment on Azure Container Apps using the configuration files in the `infra` folder.
 
 This diagram shows the architecture of the deployment:
 
