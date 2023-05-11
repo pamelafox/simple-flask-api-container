@@ -9,8 +9,7 @@ param name string
 @description('Primary location for all resources')
 param location string
 
-@description('Id of the user or app to assign application roles')
-param principalId string = ''
+param apiAppExists bool = false
 
 var resourceToken = toLower(uniqueString(subscription().id, name, location))
 var tags = { 'azd-env-name': name }
@@ -47,6 +46,7 @@ module api 'api.bicep' = {
     identityName: '${prefix}-id-api'
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
+    exists: apiAppExists
   }
 }
 

@@ -8,8 +8,8 @@
       "location": {
         "value": "${AZURE_LOCATION}"
       },
-      "principalId": {
-        "value": "${AZURE_PRINCIPAL_ID}"
+      "apiAppExists": {
+        "value": "${SERVICE_API_RESOURCE_EXISTS=false}"
       }
     }
   }
