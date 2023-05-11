@@ -9,11 +9,7 @@ param name string
 @description('Primary location for all resources')
 param location string
 
-@description('The image name for the api service')
-param apiImageName string = ''
-
-@description('Id of the user or app to assign application roles')
-param principalId string = ''
+param apiAppExists bool = false
 
 var resourceToken = toLower(uniqueString(subscription().id, name, location))
 var tags = { 'azd-env-name': name }
@@ -26,18 +22,6 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 var prefix = '${name}-${resourceToken}'
 
-
-// Store secrets in a keyvault
-module keyVault './core/security/keyvault.bicep' = {
-  name: 'keyvault'
-  scope: resourceGroup
-  params: {
-    name: '${take(replace(prefix, '-', ''), 17)}-vault'
-    location: location
-    tags: tags
-    principalId: principalId
-  }
-}
 
 // Container apps host (including container registry)
 module containerApps 'core/host/container-apps.bicep' = {
@@ -57,12 +41,12 @@ module api 'api.bicep' = {
   name: 'api'
   scope: resourceGroup
   params: {
-    name: '${take(prefix,19)}-containerapp'
+    name: '${take(prefix,19)}-ca'
     location: location
-    imageName: apiImageName
+    identityName: '${prefix}-id-api'
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
-    keyVaultName: keyVault.outputs.name
+    exists: apiAppExists
   }
 }
 
@@ -86,4 +70,3 @@ output SERVICE_API_NAME string = api.outputs.SERVICE_API_NAME
 output SERVICE_API_URI string = api.outputs.SERVICE_API_URI
 output SERVICE_API_IMAGE_NAME string = api.outputs.SERVICE_API_IMAGE_NAME
 output SERVICE_API_ENDPOINTS array = ['${api.outputs.SERVICE_API_URI}/generate_name']
-output AZURE_KEY_VAULT_NAME string = keyVault.outputs.name
