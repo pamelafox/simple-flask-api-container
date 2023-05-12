@@ -30,6 +30,7 @@ module containerApps 'core/host/container-apps.bicep' = {
   params: {
     name: 'app'
     location: location
+    tags: tags
     containerAppsEnvironmentName: '${prefix}-containerapps-env'
     containerRegistryName: '${replace(prefix, '-', '')}registry'
     logAnalyticsWorkspaceName: logAnalyticsWorkspace.outputs.name
@@ -43,6 +44,7 @@ module api 'api.bicep' = {
   params: {
     name: '${take(prefix,19)}-ca'
     location: location
+    tags: tags
     identityName: '${prefix}-id-api'
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
