@@ -67,27 +67,23 @@ This diagram shows the architecture of the deployment:
 
 Steps for deployment:
 
-1. Sign up for a [free Azure account](https://azure.microsoft.com/free/)
-2. Install the [Azure Dev CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd). (If you opened this repository in a devcontainer, that part will be done for you.)
-3. Initialize a new `azd` environment:
+1. Sign up for a [free Azure account](https://azure.microsoft.com/free/) and create an Azure Subscription.
+2. Install the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd). (If you open this repository in Codespaces or with the VS Code Dev Containers extension, that part will be done for you.)
+3. Login to Azure:
 
     ```shell
-    azd init
+    azd auth login
     ```
 
-    It will prompt you to provide a name (like "flask-app") that will later be used in the name of the deployed resources.
-    
-3. Provision and deploy all the resources:
+4. Provision and deploy all the resources:
 
     ```shell
     azd up
     ```
+    It will prompt you to provide an `azd` environment name (like "flask-app"), select a subscription from your Azure account, and select a location (like "eastus"). Then it will provision the resources in your account and deploy the latest code. If you get an error with deployment, changing the location can help, as there may be availability constraints for some of the resources.
 
-    It will prompt you to login, pick a subscription, and provide a location (like "eastus"). Then it will provision the resources in your account and deploy the latest code. If you get an error with deployment, changing the location (like to "centralus") can help, as there may be availability constraints for some of the resources.
-
-4. When `azd` has finished deploying, you'll see an endpoint URI in the command output. Visit that URI, and you should see the API output! 🎉
-
-5. When you've made any changes to the app code, you can just run:
+5. When `azd` has finished deploying, you'll see an endpoint URI in the command output. Visit that URI, and you should see the API output! 🎉
+6. When you've made any changes to the app code, you can just run:
 
     ```shell
     azd deploy
@@ -99,11 +95,10 @@ Pricing varies per region and usage, so it isn't possible to predict exact costs
 The majority of the Azure resources used in this infrastructure are on usage-based pricing tiers.
 However, Azure Container Registry has a fixed cost per registry per day.
 
-You can try the [Azure pricing calculator](https://azure.com/e/a0b45ff4228d46baa8ca1dbd15d62afa) for the resources:
+You can try the [Azure pricing calculator](https://azure.com/e/9f8185b239d240b398e201078d0c4e7a) for the resources:
 
 - Azure Container App: Consumption tier with 0.5 CPU, 1GiB memory/storage. Pricing is based on resource allocation, and each month allows for a certain amount of free usage. [Pricing](https://azure.microsoft.com/pricing/details/container-apps/)
 - Azure Container Registry: Basic tier. [Pricing](https://azure.microsoft.com/pricing/details/container-registry/)
-- Key Vault: Standard tier. Costs are per transaction, a few transactions are used on each deploy. [Pricing](https://azure.microsoft.com/pricing/details/key-vault/)
 - Log analytics: Pay-as-you-go tier. Costs based on data ingested. [Pricing](https://azure.microsoft.com/pricing/details/monitor/)
 
 ⚠️ To avoid unnecessary costs, remember to take down your app if it's no longer in use,
